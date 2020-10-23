@@ -1,0 +1,502 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 Helvetica-Bold;}
+{\colortbl;\red255\green255\blue255;\red146\green146\blue146;\red103\green173\blue222;\red162\green212\blue246;
+\red210\green210\blue210;\red227\green227\blue227;\red0\green0\blue0;\red193\green193\blue193;\red223\green173\blue151;
+\red91\green209\blue190;\red103\green178\blue92;\red196\green221\blue178;\red193\green214\blue183;\red170\green24\blue3;
+\red0\green120\blue121;\red44\green49\blue54;\red170\green227\blue254;\red147\green147\blue147;\red213\green142\blue221;
+\red60\green105\blue167;\red100\green19\blue99;\red4\green51\blue255;}
+{\*\expandedcolortbl;;\csgenericrgb\c57414\c57415\c57415;\csgenericrgb\c40287\c67849\c87082;\csgenericrgb\c63380\c83253\c96628;
+\csgenericrgb\c82422\c82425\c82423;\csgenericrgb\c88940\c88943\c88942;\csgenericrgb\c0\c0\c0;\csgenericrgb\c75744\c75747\c75746;\csgenericrgb\c87410\c68011\c59168;
+\csgenericrgb\c35737\c81912\c74420;\csgenericrgb\c40423\c69722\c36120;\csgenericrgb\c76790\c86647\c69877;\csgenericrgb\c75837\c83870\c71617;\csgenericrgb\c66810\c9378\c1006;
+\csgenericrgb\c0\c47129\c47602;\csgenericrgb\c17208\c19333\c21292;\csgenericrgb\c66833\c88969\c99745;\csgenericrgb\c57783\c57784\c57783;\csgenericrgb\c83362\c55584\c86719;
+\csgenericrgb\c23676\c41263\c65435;\csgenericrgb\c39210\c7402\c38747;\csgenericrgb\c1680\c19831\c100000;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww25400\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf2 <\cf3 Project\cf2  \cf4 Sdk\cf2 ="\cf5 Microsoft.NET.Sdk.Web\cf2 ">\cf6 \
+ \cf2 \
+ \cf3  <PropertyGro\cf2 u\cf6 p\cf2 >\
+  \cf3   <TargetFramew\cf2 o\cf5 rk>net\cf2 5.\cf3 0</TargetFramew\cf2 o\cf6 r\cf2 k>\
+\cf3   </PropertyG\cf2 r\cf6 o\cf2 up\cf6 >\cf2 \
+\cf3   \
+</P\cf2 r\cf6 o\cf7 j\cf2 ec\cf3 t>\
+\
+\cf2 \
+\cf4 <Pr\cf2 oj\cf5 ect Sdk="Microsoft.NE\cf2 T.\cf6 Sdk\cf2 .We\cf3 b">\
+ \
+  <Pr\cf2 o\cf6 p\cf2 ertyG\cf3 roup>\
+    <Tar\cf2 g\cf5 etFram\cf2 ew\cf3 ork>net5.0</Tar\cf2 g\cf6 e\cf2 tFram\cf3 ework>\
+    <Runt\cf2 i\cf5 meIdentifier\cf2 >b\cf3 rowser-wasm</Runt\cf2 i\cf6 m\cf2 eIden\cf3 tifier>\
+    <UseBla\cf2 z\cf5 orWe\cf2 bA\cf3 ssembly>true</UseBla\cf2 z\cf6 o\cf2 rWeb\cf3 Assembly>\
+  \cf2 <\cf6 /\cf2 Pr\cf6 o\cf2 pe\cf3 rtyGrou\cf2 p>\cf6 \
+\cf7   \cf2 \
+<\cf3 /Project>\cf2  \cf6  \cf2 \
+\
+\cf3 \
+  <ItemGroup>\
+\cf2  \cf4    <Pac\cf2 ka\cf5 geReference Include="Microsoft\cf2 .A\cf4 spNetCo\cf2 re\cf5 .JsonPatch" Versi\cf2 on="\cf6 5\cf2 .0.0-\cf3 preview.8.*" />\cf2 \
+\cf4     <Pa\cf2 ck\cf5 ageReference Include="Microsoft.Extension\cf2 s.\cf4 Caching\cf2 .A\cf5 bstractions" Vers\cf2 ion=\cf6 "\cf2 5.0.0\cf3 -preview.8.*" />\cf4 \
+    <P\cf2 ac\cf5 kageReference Includ\cf2 e=\cf4 "System\cf2 .N\cf5 et.Http.Json" Ver\cf2 sion\cf6 =\cf2 "5.0\cf3 .0-previe\cf2 w\cf6 .\cf7 8.*\cf6 " /\cf8 >\cf6 \
+  </ItemGroup>\
+\
+\
+\cf8 \
+a\cf6 pp.UseEndpoints(endp\cf8 o\cf6 ints =>\cf9 \
+\{\
+       \cf6  e\cf3 ndpoi\cf6 nts.MapGe\cf8 t(\cf6 "/countries", async contex\cf3 t =\cf6 >\
+        \{\
+  \cf8  \cf6         \cf8  \cf6    var \cf8 c\cf6 ountryServi\cf8 c\cf6 e = context.Req\cf8 u\cf6 est.HttpContext.Req\cf10 uestServices.G\cf6 etRequiredService<Coun\cf3 try\cf6 Service>();\
+\cf3  \
+  \cf6              va\cf8 r\cf6  countries = await count\cf3 rySer\cf6 vice.Get\cf8 (\cf6 );\
+ \
+ \cf8  \cf6              await context.Response.Wri\cf8 t\cf6 eAsJsonAsync(countries);\
+  \cf7   \cf6     \cf8 \}\cf6 ).RequireAuthorization(\cf8 );\cf6 \
+\});\
+\
+\
+\
+app.Use\cf8 E\cf6 ndpoint\cf9 s(endpoints \cf6 =>\cf3 \
+\{\
+\cf6         e\cf8 nd\cf6 points.MapGet("/countries"\cf3 , a\cf6 sync context =>\cf8 \
+\cf6         \cf8 \{\cf6 \
+     \cf8  \cf6          va\cf8 r\cf6  countryService\cf8  \cf6 = context.Request.H\cf10 ttpContext.Req\cf6 uestServices.GetRequir\cf3 edS\cf6 ervice<Coun\cf8 t\cf6 r\cf3 yServ\cf6 ice>();\
+ \
+   \cf8  \cf6            var countries\cf3  = aw\cf6 ait coun\cf8 t\cf6 ryServic\cf8 e\cf6 .Get();\
+ \
+               await contex\cf8 t\cf6 .Response.WriteAsJsonA\cf7 syn\cf3 c(cou\cf6 ntries);\cf3 \
+        \cf6 \}).AllowAnonymous();\
+\});\
+\
+\
+\
+us\cf8 i\cf6 ng System;\
+namespac\cf3 e Cust\cf6 o\cf3 mAuth\cf6 o\cf10 rizationFailureResponse.Authorization\
+\{\
+\cf6     public class SampleAuthorizationMiddlewareResultHan\cf3 dler : \cf6 I\cf3 Authoriz\cf6 ationMiddlewareResultHandler\
+    \{\
+        private readon\cf3 ly IAu\cf6 t\cf10 horizationMiddlewareResultHandler _handler\cf6 ;\
+ \
+        public SampleAuthorizationMiddlewareResultHandler(IAuthorizationM\cf8 i\cf6 ddlewareR\cf8 es\cf6 u\cf3 ltHan\cf6 d\cf3 ler\cf6  \cf10 handler)\
+        \{\
+\cf6  \cf3       \cf6      _handler = handler ?? throw\cf3  new A\cf6 r\cf3 gumen\cf6 t\cf10 Null\cf6 Exception(nameof(handler))\cf10 ;\
+        \}\
+ \cf6 \
+        public async Task Ha\cf10 ndleAsync(\cf6 \
+            RequestDelega\cf10 te requestDelegate,\cf6 \
+            HttpContext httpCont\cf10 ext,\
+            Authori\cf6 zationPolicy authorizationPolicy,\
+            Pol\cf11 icyAuthorizationResult policyAuthorizationResult)\
+        \{\
+            // \cf6 if the author\cf3 iz\cf6 ation was forbidden, let's \cf8 u\cf6 se custom \cf8 lo\cf6 gic to handle that.\
+     \cf8  \cf6       if (policyAutho\cf8 ri\cf6 z\cf3 atio\cf6 nResult.Forbidden && policyAutho\cf11 rizationResult.AuthorizationFailure != null)\
+            \{\
+        \cf6         // as an \cf3 ex\cf6 ample, let's return 404 if \cf8 s\cf6 pecific requirement \cf8 h\cf6 as failed\
+       \cf8  \cf6         if (poli\cf8 cy\cf6 Authorization\cf3 Re\cf6 sult.AuthorizationFailure.FailedRequirements.Any(requirement => requir\cf8 e\cf6 ment is \cf8 S\cf6 ampleRequir\cf8 e\cf6 me\cf3 nt)\cf6 )\cf12 \
+            \cf8  \cf6    \{\
+                    http\cf3 Conte\cf6 xt.Response.\cf8 S\cf6 tatusCod\cf8 e\cf6  = (int)HttpStatus\cf8 C\cf6 ode.NotFound;\
+                    await httpCo\cf11 ntext.Response.WriteAsync(Startup.CustomForbiddenMessage);\
+ \
+                   \cf6  // return right away\cf3  as th\cf6 e default implementation would overw\cf3 rite\cf6  \cf3 th\cf6 e status code\
+            \cf8  \cf6        return;\
+    \cf8  \cf6            \}\
+    \cf8  \cf6            else \cf8 if\cf6  (policyAutho\cf3 ri\cf6 zationResult.AuthorizationFailure.FailedRequirements.Any(requirement => requ\cf11 irement is SampleWithCustomMessageRequirement))\
+               \cf6  \{\
+                 \cf11    // if other requirements failed, let's just use a custom message\
+                    // but we have to use OnStarting c\cf6 allback because the d\cf11 efault handlers will want to modify i.e. status code of the response\
+           \cf6          // and modif\cf3 ica\cf6 tions of \cf8 t\cf6 he respo\cf8 n\cf6 se are not allowed once the writing has started\
+        \cf8  \cf6         \cf8  \cf6   var message \cf8 = \cf6 Startup.Cust\cf8 o\cf6 mForbidd\cf8 e\cf6 nMessage;\cf8 \
+\cf6  \
+        \cf10         \cf8  
+\f1\b \cf6    h
+\f0\b0 \cf8 t\cf6 tpContext.Response\cf8 .\cf6 OnStarting(() => httpContext.Response.BodyWriter.WriteAsy\cf3 nc(En\cf6 coding.UT\cf8 F\cf6 8.GetBytes(message)).AsTask());\
+                \}\
+            \}\
+ \
+            await _handler.HandleAsync(\cf7 re\cf3 questDe\cf6 l\cf3 egate\cf6 ,\cf10  httpContext\cf6 , a\cf12 uthorizati\cf6 onPolic\cf3 y, pol\cf6 i\cf3 cyAut\cf6 h\cf10 orization\cf6 R\cf3 esult)\cf6 ;\
+        \}\
+    \}\
+\}\
+\
+\
+\cf10 \
+public class Custom\cf6 Filter : IHubFilter\cf10 \
+\{\
+\cf6  \cf10    public async Valu\cf6 eT\cf10 ask<objec\cf6 t\cf3 > Invo\cf6 keMethodAsync(\
+       
+\f1\b \cf10  HubInv
+\f0\b0 \cf8 o
+\f1\b \cf6 cationCon
+\f0\b0 t\cf9 ext invocationContext,\cf6  Func<HubInvocatio\cf8 n\cf6 Context, Value\cf9 Ta\cf6 sk<object>>\cf3  ne\cf6 xt)\
+    \{\
+        Con\cf3 sole.W\cf6 r\cf3 iteLi\cf6 ne($"Calling hub method '\{invocationContext.\cf3 HubMe\cf6 th\cf10 odName\}'"\cf6 );\
+        try\
+        \{
+\f1\b \cf10 \
+      
+\f0\b0 \cf8  
+\f1\b \cf6      retu
+\f0\b0 r\cf9 n await next(invocati\cf6 onContext);\
+     \cf8  \cf6   \}\
+        c\cf9 at\cf6 ch (Exception e\cf3 x)\
+ \cf6        \{\
+            C\cf7 ons\cf3 ole.Wr\cf6 i\cf3 teLi\cf6 ne($"Exception call\cf12 ing '\{invocationCo\cf6 ntext.HubMethodName\}'");\cf8 \
+\cf6             throw e\cf8 x;\cf6 \
+        \}\
+    \}\
+\}\cf8 \
+\cf6 \
+\
+\
+publ\cf10 ic void Conf\cf6 igureServices(IServiceColle\cf8 c\cf6 tion services\cf10 )\
+\{\
+    se\cf6 rvices.\cf7 Add\cf3 Signal\cf6 R\cf3 (optio\cf6 n\cf12 s =>\
+    \{\cf6 \
+
+\f1\b         options.A
+\f0\b0 d\cf3 dFilte\cf6 r<CustomF\cf8 il\cf6 ter>();\
+    
+\f1\b \cf10 \});
+\f0\b0 \cf8 \
+
+\f1\b \cf6  \
+    services.AddS
+\f0\b0 ingleto\cf8 n\cf6 <CustomFilter>();\
+\}\
+\
+\
+\
+public s\cf8 ta\cf6 tic IHostBuilder \cf8 C\cf6 reateHostBuilder(string[]\cf8  a\cf6 rgs) =>\
+            H\cf8 o\cf6 st.Cre\cf8 a\cf6 teDef\cf8 a\cf6 ultBuilder(args)\
+.Con\cf8 f\cf6 igureWebH\cf8 o\cf6 stDefaults(w\cf13 eb\cf6 Builder =>\
+\{\
+   \cf8  \cf6 webBui\cf8 l\cf6 der.C\cf8 o\cf6 nfigureKestrel(option\cf8 s\cf6  =>\
+    \cf8 \{\cf6 \
+        op\cf13 t\cf6 ions.Limits.Http2.KeepAli\cf8 v\cf6 ePingInterv\cf10 al = Ti\cf6 meSpan.Fr\cf7 om\cf3 Second\cf6 s\cf3 (10);\cf6 \
+\cf12         opti\cf6 o
+\f1\b ns.Limits.Http2.K
+\f0\b0 e\cf3 epAliv\cf6 ePingTime\cf8 ou\cf6 t
+\f1\b \cf10  = T
+\f0\b0 \cf8 i
+\f1\b \cf6 meSpan.FromSeconds(1
+\f0\b0 );\
+   \cf8  \cf6 \});\
+    webBuilder.UseStartup<Start\cf8 up\cf6 >();\
+\});\
+\
+\
+pu\cf8 b\cf6 lic static IHostBuilder C\cf8 re\cf6 ateHostBuilder(string[\cf8 ]\cf6  args) =>\
+Host.CreateDefaultB\cf8 u\cf6 ilder(args\cf8 )\cf6 \
+.ConfigureWebHostDefau\cf3 lts(we\cf6 bBuilder =>\
+\{\
+    webBuilder.ConfigureKe\cf3 stre\cf6 l\cf9 (optio\cf6 ns =>\
+    \{\
+        \cf3 option\cf6 s.Reque\cf8 s\cf6 tHea\cf8 d\cf10 erEncodi\cf8 n\cf6 gSelector = encoding =>\cf3 \
+      \cf6   \{\
+            switc\cf3 h (enc\cf6 oding)\cf8 \
+\cf6     \cf8  \cf10        \{
+\f1\b \cf6 \
+   
+\f0\b0              case "Host":\
+                    re\cf8 t\cf6 urn System.\cf10 Text.En\cf6 coding.La\cf7 ti\cf3 n1;\
+ \cf6  \cf3       \cf6  \cf12        defau\cf6 l
+\f1\b t:\
+             
+\f0\b0  \cf3       \cf6 return Sy\cf8 st\cf6 e
+\f1\b \cf10 m.Te
+\f0\b0 \cf8 x
+\f1\b \cf6 t.Encoding.UTF8;\
+  
+\f0\b0        \cf8  \cf6   \}\
+        \};\
+    \});\cf8 \
+ \cf6    webBuilder.\cf8 U\cf6 seStartup<Startup>();\
+\cf8 \})\cf6 ;\
+\
+\
+public static I\cf8 H\cf6 ostBuilder CreateH\cf8 o\cf6 s\cf3 tBu\cf6 ilder(string[] args) =>\
+Host.Cr\cf8 e\cf6 a\cf3 teDe\cf6 faultBuilder(ar\cf8 g\cf6 s)\
+.ConfigureLogging(logging =>\
+\{\cf8 \
+ \cf6    logging.AddJson\cf8 C\cf6 onsole(opti\cf10 ons =>\cf6 \
+    \{\
+ \cf7        \cf14 options.J\cf7 so\cf15 n\cf7 Writ\cf14 erOptions \cf7 = \cf14 new JsonWrite\cf7 rOpt\cf14 ions() \{ I\cf7 nd\cf14 ented = true \};\
+    \});\
+\})\cf7 \
+.C\cf14 onfigureW\cf7 eb\cf14 HostDefaults(webBuilder =>\
+\{\
+     webBui\cf7 lder\cf14 .UseSta\cf7 rtup<Sta\cf14 rtup>();\cf7 \
+\}\cf14 );\
+\
+\
+\
+\{\
+  "EventId": 0,\
+  "LogLevel"\cf7 : "Inf\cf14 ormation"\cf7 ,\cf14 \
+  "Category": "Microsof\cf7 t.Host\cf14 ing.Lifetime",\
+  \cf7 "M\cf14 essage": "Now listening on: h\cf7 ttps://l\cf16 o\cf7 calhost:\cf6 5001",\
+  "State": \{\
+    "Message": "Now\cf7  \cf6 listening on: https://localhost:5001",\
+    "address": "https://localhost:5001",\
+    "\{OriginalFormat\}":\cf7  "No\cf3 w lis\cf6 tening \cf8 o\cf6 n: \{address\cf7 \}\cf3 "\
+  \cf6 \}\
+\}\
+\
+\
+\
+@inject L\cf8 a\cf6 zyAssembly\cf8 L\cf6 oader La\cf7 z\cf3 yAsse\cf6 mblyLoader\
+ \
+@code \cf8 \{\cf6 \
+    var \cf8 a\cf6 ssemblies =\cf8  \cf6 await Laz\cf7 yAssemb\cf6 lyLoader.LoadAssembliesAsync(new string[]\cf2  \cf3 \{ "Lib\cf6 1\cf17 .dll" \});\
+\cf8 \}\cf5 \
+\
+\
+\
+@using System.Refl\cf6 e\cf17 ction\
+@using Micros\cf8 o\cf5 ft.AspNetCore.Componen\cf6 t\cf17 s.Routing\
+@usi\cf8 n\cf5 g\cf7  \cf6 Microsoft.AspNe\cf5 t\cf2 C\cf6 ore.C\cf2 o\cf3 mponents.W\cf2 e\cf6 bAssembly\cf2 .\cf3 Ser\cf2 v\cf6 ices\
+@inject\cf2  \cf3 L\cf2 a\cf6 zyAssemblyLoader LazyAssembly\cf2 Lo\cf3 a\cf2 d\cf6 er\
+ \
+<R\cf2 ou\cf3 ter\cf2  \cf6 AppAs\cf2 se\cf3 mbly="type\cf2 o\cf6 f(Pro\cf2 g\cf3 ram).\cf6 A\cf17 ssembly\cf8 "\cf5  Additional\cf2 A\cf6 ssemblies\cf2 =\cf3 "lazyLoad\cf6 e\cf17 dAssembli\cf8 e\cf5 s\cf7 "\cf6  OnNaviga\cf5 t\cf6 e\cf17 Async="@OnNav\cf8 i\cf5 gateAsync">\
+    <Na\cf6 v\cf2 ig\cf6 ating\cf2 >\cf3 \
+    \cf2  \cf6    <d\cf2 i\cf3 v>\
+    \cf2  \cf6        <p\cf2 >\cf3 Loading th\cf6 e\cf17  reque\cf8 s\cf5 ted page...</p>\
+   \cf2  \cf6     </div>\
+ \cf2  \cf3  \cf2  \cf6 </Navigating>\
+    <Found Context="route\cf2 Da\cf3 t\cf2 a\cf6 ">\
+     \cf2   \cf3  <RouteVie\cf2 w\cf6  Rout\cf2 eD\cf3 ata="@ro\cf2 u\cf6 t\cf2 eD\cf3 ata" D\cf2 e\cf6 fau\cf7 l\cf6 tLayout="typeof(MainLay\cf2 o\cf3 ut)" />\cf2 \
+\cf6     </Found>\
+    <NotFound>\
+        <La\cf2 y\cf3 outView \cf2 L\cf6 ayout="typeof(MainLayout)">\
+            <p>Sorry, there is nothing at this address.</p>\
+        </LayoutView>\
+    </NotFound>\
+</Router>\
+ \
+@code \{\
+    private List<Assembly> lazyLoadedAssemblies = \
+        new List<Assembly>();\
+ \
+    private async Task OnNavigateAsync(NavigationContext args)\
+  \cf7   \{\cf6 \
+        if (args.Pat\cf2 h\cf3 .EndsWith("/pag\cf6 e\cf7 1\cf6 "))\cf17 \
+     \cf8  \cf5   \{\
+            var assemb\cf2 l\cf6 ies =\cf7  \cf3 await L\cf6 az\cf3 yAs\cf6 semblyLoa\cf3 de\cf6 r.LoadAssembliesAsync(new\cf2  \cf3 str\cf6 i\cf17 ng[] \cf8 \{\cf5  "Lib1.dll" \cf2  \cf6 \});\
+        \cf2  \cf3    lazyLoa\cf6 d\cf17 edAss\cf8 e\cf5 mblies.AddRange(as\cf6 s\cf17 em\cf8 b\cf5 l\cf7 i\cf6 es);\
+ \cf8  \cf6   \cf5  \cf6  \cf17   \}\
+\cf8  \cf5  \cf7  \cf6  \}\
+\}\
+\
+\cf5 \
+\cf2 \
+O\cf6 pinion about \cf2 b\cf3 lazor\cf6 :\cf17 \
+<In\cf8 p\cf5 utRadioGroup @bind\cf6 -\cf17 Val\cf8 u\cf5 e\cf7 =\cf6 "survey\cf8 .\cf6 Op\cf5 i\cf2 n\cf7 i\cf6 onAbout\cf8 B\cf6 lazor\cf2 ">\cf3 \
+   \cf2  \cf6 @foreach \cf2 (v\cf3 ar \cf2 o\cf6 pinion \cf2 in\cf3  opinions)\
+   \cf2  \cf6 \{\cf7 \
+ \cf2  \cf3       \cf6 <\cf7 d\cf6 iv clas\cf8 s\cf5 ="form-check">\
+            <I\cf2 n\cf6 putRadio \cf2 cl\cf3 ass="f\cf2 o\cf6 r\cf2 m\cf3 -chec\cf6 k\cf7 -\cf3 inp\cf8 u\cf5 t" id="@opi\cf6 n\cf2 io\cf6 n\cf7 .id" \cf3 Va\cf6 lue="@opinion.id" />\
+     \cf8  \cf6  \cf13  \cf6     <lab\cf3 el \cf6 class="\cf8 f\cf6 o\cf9 rm-check-label" f\cf6 or="@opinion.id">@opinion.\cf9 la\cf6 bel</l\cf2 a\cf3 bel>\cf6 \
+\cf17      \cf8  \cf5   </div\cf2 >\
+\cf3     \}\cf6 \
+</In\cf2 p\cf3 utRa\cf6 d\cf17 ioG\cf8 r\cf5 oup>\
+\cf17 \
+\
+\cf8 \
+\cf5 <button @onclick=\cf6 "\cf2 ()\cf6  =>\cf7  te\cf3 xtInpu\cf6 t\cf3 .Focu\cf6 s\cf10 Async(\cf6 )">Set \cf3 focus<\cf6 /\cf3 but\cf6 ton>\
+\cf3 <in\cf6 pu\cf3 t @\cf6 ref="tex\cf3 tInput\cf6 "\cf3  />\
+\cf6 \
+\
+\
+\
+@if \cf3 (un\cf6 re\cf3 adN\cf6 otificat\cf3 ionsCo\cf6 u\cf3 nt > \cf6 0\cf10 )\
+\cf6 \{\
+\cf10     va\cf6 r title\cf3  = $"N\cf6 o\cf3 tifica\cf6 tions (\{\cf3 unr\cf6 ea\cf3 dNo\cf6 tificati\cf3 onsCou\cf6 n\cf3 t\})";\cf10 \
+  \cf6   <\cf10 Tit\cf6 le Valu\cf3 e="tit\cf6 l\cf3 e"></T\cf6 itle>\
+    <Link r\cf3 el=\cf6 "i\cf3 con\cf6 " href="\cf3 icon-u\cf6 n\cf3 read.\cf6 i\cf10 co"\cf6  />\cf10 \
+\}\cf6 \
+\
+\
+\cf3 \
+publi\cf6 c\cf3  class\cf6  Animal\
+\{\
+   \cf3  pu\cf6 bl\cf3 ic \cf6 int Id\cf7  \{ \cf3 get; s\cf6 e\cf3 t; \}\cf6 \
+    publi\cf3 c\cf18  \cf6 string Spe\cf3 cie\cf6 s\cf18  \{ \cf6 g\cf18 et; \cf6 s\cf3 et; \}\
+\}\cf6 \
+ \
+public clas\cf3 s Pet : \cf18 A\cf19 nim\cf18 a\cf6 l\cf18 \
+\{\
+\cf6     public string Nam\cf3 e \{ get;\cf18  \cf19 set\cf18 ;\cf6  \cf18 \}\
+\cf6 \}\cf18 \
+ \
+\cf6 public class\cf3  Cat : P\cf18 e\cf19 t\
+\cf18 \{\
+    \cf6 public string Educatio\cf3 nLevel \{\cf18  \cf19 get\cf18 ;\cf6  \cf18 set; \cf6 \}\
+\}\
+ \
+public cla\cf3 ss Dog :\cf18  \cf19 Pet\cf6 \
+\cf18 \{\
+  \cf6   pub\cf3 lic string\cf6  FavoriteToy \{\cf3  get; s\cf6 e\cf3 t; \}\cf6 \
+\}\
+\cf18 \
+\cf6 \
+\cf7 \
+C\cf3 REATE \cf6 T\cf3 ABLE \cf6 [Animals] \cf3 (\cf6 \
+    [Id] \cf3 INT\cf6  \cf18 NOT\cf6  \cf18 NULL\cf6  \cf3 IDENTITY\cf18 ,\cf6 \
+    [Species]\cf3  NVARCHA\cf18 R\cf19 (MA\cf18 X\cf6 )\cf18  NULL\cf6 ,\
+  \cf3   [Discrim\cf6 inator] NVARCH\cf3 AR(MAX)\cf6  \cf3 NOT \cf18 N\cf6 ULL,\
+\cf18   \cf6   [\cf3 Name] \cf6 N\cf3 VARCH\cf6 AR(MAX)\cf3  \cf18 N\cf6 ULL,\
+    \cf3 [Ed\cf6 u\cf18 cat\cf6 i\cf18 onLev\cf6 el] NVARCHAR\cf3 (MAX) NU\cf18 L\cf19 L,\cf18 \
+\cf6  \cf18    [F\cf6 avori\cf3 teToy] NVA\cf6 RCHAR(MAX) \cf3 NULL,\
+\cf6  \cf3    C\cf18 O\cf6 NSTR\cf18 AI\cf6 NT [P\cf3 K_Animals]\cf6  PRIMARY KEY ([Id]));\cf3 \
+\
+\
+\
+\cf6 C\cf3 REAT\cf18 E\cf6  TAB\cf18 L\cf6 E\cf3  [Animals]\cf6  (\
+    [I\cf3 d\cf18 ]\cf6  int\cf18  \cf6 N\cf3 OT\cf6  \cf3 NULL I\cf6 D\cf3 EN\cf6 T\cf3 ITY,\
+\cf6  \cf18   \cf6  [S\cf3 pecies\cf6 ]\cf3  NVAR\cf6 CHAR(MA\cf3 X\cf18 )\cf6  NULL,\
+  \cf3   C\cf6 O\cf18 NST\cf6 R\cf18 AINT \cf6 [PK_Animals] PRIMARY K\cf3 EY ([Id]\cf18 )\cf19 \
+)\cf18 ;\
+ \
+C\cf6 REATE\cf3  TABLE [Pe\cf6 ts] (\
+    \cf3 [Id] in\cf6 t\cf3  NOT\cf18  \cf6 NULL\cf18 ,\cf6 \
+    \cf3 [Name] NVA\cf6 RCHAR(MAX) NULL,\
+    \cf3 CONSTRA\cf6 I\cf3 NT [\cf18 P\cf6 K_Pe\cf18 t\cf6 s\cf3 ] PRIMARY \cf6 KEY ([Id])\cf3 ,\cf6 \
+   \cf18  \cf6 C\cf3 ON\cf6 S\cf3 TRAINT\cf6  \cf3 [F\cf6 K\cf3 _Pets_\cf18 A\cf6 nimal\cf3 s_Id] FORE\cf6 IGN KEY ([Id]) REFE\cf3 RENCES \cf6 [\cf3 Anim\cf18 a\cf6 ls] \cf18 (\cf6 [\cf3 Id]) ON DE\cf6 LETE NO\cf3  \cf18 A\cf6 CTIO\cf18 N\cf3 \
+)\cf6 ;\cf3 \
+ \
+C\cf6 R\cf3 EA\cf6 T\cf3 E TABL\cf6 E\cf18  [\cf6 Cat\cf3 s] (\
+\cf6  \cf3    [I\cf6 d] int \cf3 N\cf18 O\cf6 T NULL,\
+ \cf3    \cf6 [\cf18 Edu\cf6 c\cf18 ation\cf6 Level] NVARCHAR(MAX\cf3 ) NULL,\cf18 \
+\cf19    \cf18  \cf6 C\cf18 ONSTR\cf6 AINT \cf3 [PK_Cats] \cf6 PRIMARY KEY\cf3  ([Id])\cf6 ,\cf3 \
+  \cf18  \cf6  CON\cf18 ST\cf6 RAINT\cf3  [FK_Cats_\cf6 Animals_Id] FOREIGN KE\cf3 Y ([Id]\cf6 )\cf3  REF\cf18 E\cf6 RENC\cf18 E\cf6 S\cf3  [Animals]\cf6  ([Id]) ON\cf3  \cf18 D\cf6 ELET\cf18 E\cf6  \cf3 NO\cf6  \cf3 ACTION\cf6 ,\cf3 \
+\cf6  \cf3    CON\cf18 S\cf6 TRAIN\cf3 T [FK_Cats\cf6 _Pets_Id] FOREIGN K\cf3 EY ([Id\cf6 ]\cf3 ) RE\cf18 F\cf6 EREN\cf18 C\cf6 E\cf3 S [Pets] (\cf6 [Id]) O\cf3 N\cf18  \cf6 DELE\cf18 T\cf6 E\cf3  N\cf6 O\cf3  ACTIO\cf6 N\cf3 \
+\cf6 )\cf3 ;\
+ \
+\cf6 C\cf18 RE\cf6 A\cf7 TE \cf6 T\cf10 ABLE \cf6 [\cf9 Dogs] (\
+\cf6    \cf3  [Id] \cf6 i\cf3 nt NO\cf6 T\cf10  NULL,\cf6 \
+    [\cf3 Favori\cf6 t\cf3 eTo\cf6 y] NVA\cf3 RCH\cf6 AR\cf3 (MA\cf6 X) NULL,\cf3 \
+    \cf6 C\cf3 ONSTRA\cf6 INT [PK_Dog\cf3 s] \cf6 PR\cf3 IMA\cf6 RY KEY ([\cf10 Id]),\cf9 \
+    C\cf6 ONS\cf3 TRAINT\cf6  \cf3 [FK_D\cf6 o\cf10 gs_\cf6 Ani\cf10 mals_I\cf6 d] FORE\cf3 IGN KE\cf6 Y\cf3  ([Id]\cf6 ) REFERE\cf3 NCE\cf6 S \cf3 [An\cf6 imals] (\cf10 [Id])\cf6  \cf9 ON DEL\cf6 ETE\cf3  NO AC\cf6 T\cf3 ION,\cf6 \
+\cf10    \cf6  CO\cf10 NST\cf6 RAINT [\cf3 FK_Dog\cf6 s\cf3 _Pets_\cf6 Id] FOREIGN KEY ([\cf3 Id]\cf6 ) \cf3 REF\cf6 ERENCES [\cf10 Pets]\cf6  \cf9 ([Id])\cf6  ON\cf3  DELET\cf6 E\cf3  NO A\cf6 C\cf10 TIO\cf6 N\
+\cf10 );\cf6 \
+\
+\
+\
+\cf3 [Table\cf6 (\cf3 "Anima\cf6 ls")]\
+public c\cf3 las\cf6 s \cf3 Ani\cf6 mal\
+\{\cf7 \
+ \cf3    public\cf6  \cf3 int Id \{\cf6  \cf3 get;\cf6  set; \}\
+    publ\cf10 ic string Sp\cf6 ecies \{ get; set; \}\
+\}\
+ \
+[Table\cf8 (\cf6 "Pets")\cf10 ]\
+pub\cf6 lic\cf8  \cf6 class Pe\cf9 t : Anima\cf6 l\
+\{\
+    public st\cf8 r\cf6 ing Nam\cf10 e \{\cf6  ge\cf8 t\cf6 ; set; \}\cf9 \
+\}\
+\cf6 \
+[Table("Cats")]\
+p\cf8 u\cf6 blic cl\cf10 ass\cf6  Ca\cf8 t\cf6  : Pet\
+\cf9 \{\
+   \cf6  public string Educ\cf8 a\cf6 tionLev\cf10 el \cf6 \{ g\cf8 e\cf6 t; set; \cf9 \}\
+\}\
+\cf6  \
+[T\cf7 a\cf20 b\cf7 l\cf3 e("Dog\cf6 s\cf3 ")]\
+pub\cf6 lic class D\cf18 o\cf6 g : Pet\
+\{\
+\cf3    \cf18  \cf6 p\cf3 ublic s\cf6 tring Favo\cf3 riteT\cf6 o\cf18 y\cf6  \{\cf3  get\cf6 ;\cf3  set; \}\cf18 \
+\}\cf13 \
+\cf6 \
+\cf18 \
+\cf6 \
+\cf18 prote\cf6 cted override \cf3 voi\cf6 d\cf18  On\cf6 M\cf18 odel\cf6 C\cf18 r\cf6 e\cf3 at\cf6 i\cf3 ng(Mo\cf6 de\cf3 lBui\cf6 lder modelBuil\cf3 de\cf6 r\cf3 )\cf6 \
+\{\cf3 \
+    m\cf6 ode\cf18 l\cf6 B\cf3 uild\cf18 e\cf6 r.Entity<A\cf18 n\cf6 imal>().ToTable\cf3 ("An\cf6 imals");\
+   \cf3  mode\cf6 lBui\cf18 l\cf6 der.Entity<Pet>\cf3 ().To\cf6 T\cf18 abl\cf6 e("\cf3 Pets")\cf6 ;\cf18 \
+\cf6   \cf18  \cf6  m\cf18 o\cf3 delB\cf18 u\cf6 il\cf18 d\cf6 er.Entity\cf18 <\cf6 Ca\cf18 t\cf6 >().ToTable("C\cf3 ats"\cf6 );\
+    modelBu\cf18 ilder\cf6 .\cf18 Enti\cf6 ty<Dog>().ToTable("Do\cf3 gs\cf6 ");\
+\}\cf18 \
+\cf6 \
+\cf18 \
+\cf6 \
+\cf18 C\cf6 REATE FUNCT\cf18 I\cf6 ON\cf3  GetRe\cf6 p\cf3 orts\cf6 (@employeeI\cf3 d INT)\
+RET\cf18 U\cf6 RNS @reports T\cf3 ABLE\cf6 \
+(\
+	Name NVAR\cf3 CHAR \cf6 (50)\cf18  N\cf6 OT NULL,\
+	IsDev\cf3 eloper\cf6  \cf3 BIT\cf6  \cf7 NOT\cf3  NULL\cf6 \
+\cf3 )\
+AS\cf10 \
+BEGIN\
+\cf6 	WITH c\cf3 teEmpl\cf6 o\cf3 yee\cf6 s AS\
+\cf3 	(\cf6 \
+	\cf3 	SE\cf6 LECT Id,\cf3  Name,\cf6  \cf3 Manage\cf6 rId, IsD\cf3 eve\cf6 lo\cf3 per\cf6 \
+		FROM\cf3  Emplo\cf6 y\cf3 ees\cf6 \
+		WHERE Id = @\cf3 emp\cf6 lo\cf3 yee\cf6 Id\
+		UNIO\cf3 N ALL\cf6 \
+\cf3 		S\cf8 E\cf6 LECT e.Id, e.\cf3 Nam\cf6 e,\cf3  e.\cf6 ManagerI\cf3 d, e.I\cf6 s\cf3 Develop\cf6 e\cf10 r\
+		FRO\cf6 M Employees\cf3  e\cf6 \
+	\cf3 	IN\cf6 NER JOIN\cf3  cteEm\cf6 p\cf3 loyee\cf6 s\cf10  cteEm\cf6 p ON ct\cf3 eEmp.I\cf6 d\cf3  = e.M\cf6 anagerId\cf3 \
+	\cf6 )\cf3 \
+	I\cf6 NSERT IN\cf3 TO @re\cf6 p\cf3 orts\cf6 \
+	SELECT Name,\cf3  Is\cf6 De\cf3 vel\cf6 oper\
+\cf7 	\cf6 FROM cteEmpl\cf8 o\cf6 yees\
+	\cf10 WHERE Id\cf6  != @employeeId\
+\cf8  \cf6 \
+	RETU\cf3 RN\
+EN\cf6 D\cf10 \
+\
+\
+\cf6 \
+\cf8 p\cf10 ublic cl\cf6 ass \cf7 Empl\cf3 oye\cf6 e\
+\{\
+ \cf8  \cf6  \cf3  pub\cf6 lic int Id\cf3  \{\cf6  get; se\cf8 t\cf6 ; \}\
+    p\cf3 ubli\cf6 c string\cf3  N\cf6 ame \{ ge\cf8 t\cf6 ; set; \}\
+  \cf8  \cf6  pub\cf3 lic b\cf6 ool IsD\cf8 e\cf6 veloper \{ ge\cf8 t;\cf6  \cf3 set;\cf6  \cf3 \}\
+ \
+\cf6  \cf3    \cf6 public int? Manager\cf8 I\cf6 d \{ get; \cf8 s\cf6 et; \}\
+    public virtu\cf8 a\cf6 l Emplo\cf8 y\cf6 ee Manager\cf7  \{ \cf3 get; s\cf6 e\cf3 t; \}\cf6 \
+\cf10 \}\
+ \
+public\cf6  class \cf3 Report\cf6 \
+\cf3 \{\
+    p\cf6 u\cf12 blic string Name \cf6 \{\cf10  get; set; \cf6 \}\
+    public bool IsDeve\cf3 loper \cf6 \{\cf10  get; set; \}\cf12 \
+\}\
+\
+modelBuilde\cf6 r\cf10 .Entity<Emp\cf6 loyee>();\
+modelBuilder.Entity(typeof(Report)).H\cf8 a\cf6 sNoKey();\
+\
+\
+\
+\
+var qu\cf7 ery = from emplo\cf21 yee
+\f1\b \cf7  in context.Emp
+\f0\b0 loyees\
+from report in context.GetRepor\cf21 t\cf7 s(\cf22 \ul \ulc22 e.Id)\
+where report.IsDev\cf7 \ulnone elop\cf22 \ul er == true\
+select new\
+\{\cf7 \ulnone \
+ \cf21  \cf7   Mana\cf21 ger
+\f1\b \cf7 Name = employe
+\f0\b0 e.Name,\
+    EmployeeNa\cf21 m\cf22 \ul e = report.Name,\
+\});\
+\
+\
+\
+\cf21 \ulnone public class MyRepo\cf7 sitory\
+\{\
+    private readonly IDbContextFactory<MyDbContext> _contextFa\cf22 \ul ctory;\
+ \
+    public \cf7 \ulnone MyR\cf22 \ul epository(IDbConte\cf7 \ulnone xtF\cf0 actory<MyDbContext> contextFactory)\
+    \{\
+        _contextFactory = contextFactory;\
+    \}\
+\}\
+\
+\
+\
+\
+\
+\
+ \
+}

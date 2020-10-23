@@ -1,0 +1,163 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fnil\fcharset0 Consolas;\f1\fnil\fcharset0 Calibri;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red43\green145\blue175;\red128\green128\blue128;
+\red0\green128\blue0;\red163\green21\blue21;}
+{\*\expandedcolortbl;;\csgenericrgb\c0\c0\c100000;\csgenericrgb\c16863\c56863\c68627;\csgenericrgb\c50196\c50196\c50196;
+\csgenericrgb\c0\c50196\c0;\csgenericrgb\c63922\c8235\c8235;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab708
+\pard\pardeftab708\ri-52\partightenfactor0
+
+\f0\fs19 \cf2 using\cf0  Microsoft.Extensions.DependencyInjection;\
+\cf2 using\cf0  Microsoft.Extensions.Hosting;\
+\cf2 using\cf0  System.Threading.Tasks;\
+\
+\cf2 namespace\cf0  MyDemo\
+\{\
+\cf2  public\cf0  \cf2 sealed\cf0  \cf2 class\cf0  \cf3 Host\cf0 \
+ \{\
+  \cf4 #region\cf0  Singleton\
+\
+  \cf4 ///\cf5  \cf4 <summary>\cf0 \
+  \cf4 ///\cf5  Static constructor\cf0 \
+  \cf4 ///\cf5  \cf4 </summary>\cf0 \
+  \cf2 static\cf0  \cf3 Host\cf0 ()\
+  \{\
+   Current = \cf2 new\cf0  Host();\
+  \}\
+\
+  \cf4 ///\cf5  \cf4 <summary>\cf0 \
+  \cf4 ///\cf5  current instance\cf0 \
+  \cf4 ///\cf5  \cf4 </summary>\cf0 \
+  \cf2 public\cf0  \cf2 static\cf0  Host Current \{ \cf2 get\cf0 ; \}\
+\
+  \cf4 #endregion\cf0 \
+\
+  \cf4 #region\cf0  Declarations\
+\
+  \cf2 private\cf0  \cf2 readonly\cf0  IHost _host;\
+\
+  \cf4 #endregion\cf0 \
+\
+  \cf4 #region\cf0  Constructor / Services\
+\
+  \cf4 ///\cf5  \cf4 <summary>\cf0 \
+  \cf4 ///\cf5  Constructor\cf0 \
+  \cf4 ///\cf5  \cf4 </summary>\cf0 \
+  \cf2 private\cf0  \cf3 Host\cf0 ()\
+  \{\
+   _host = \cf2 new\cf0  HostBuilder()\
+    .ConfigureServices(ConfigureServices)\
+    .Build();\
+  \}\
+\
+  \cf4 ///\cf5  \cf4 <summary>\cf0 \
+  \cf4 ///\cf5  Configure services\cf0 \
+  \cf4 ///\cf5  \cf4 </summary>\cf0 \
+  \cf4 ///\cf5  \cf4 <param name="\cf0 context\cf4 "></param>\cf0 \
+  \cf4 ///\cf5  \cf4 <param name="\cf0 services\cf4 "></param>\cf0 \
+  \cf2 private\cf0  \cf2 void\cf0  ConfigureServices(HostBuilderContext context, IServiceCollection services)\
+  \{\
+   \cf5 // Add ViewsModels, Views, services\cf0 \
+   services.AddTransient<IMainViewModel, MainViewModel>();\
+   services.AddTransient<IMainView, MainView>();\
+   services.AddTransient<ISettingsViewModel, SettingsViewModel>();\
+   services.AddTransient<ISettingsView, SettingsView>();\
+   services.AddTransient<INavigationService, NavigationService>();\
+  \}\
+\
+  \cf4 #endregion\cf0 \
+\
+  \cf4 #region\cf0  Methodes\
+\
+  \cf4 ///\cf5  \cf4 <summary>\cf0 \
+  \cf4 ///\cf5  Start the host\cf0 \
+  \cf4 ///\cf5  \cf4 </summary>\cf0 \
+  \cf4 ///\cf5  \cf4 <returns></returns>\cf0 \
+  \cf2 public\cf0  \cf2 async\cf0  Task StartAsync()\
+  \{\
+   \cf2 await\cf0  _host.StartAsync();\
+  \}\
+\
+  \cf4 ///\cf5  \cf4 <summary>\cf0 \
+  \cf4 ///\cf5  Stop the host\cf0 \
+  \cf4 ///\cf5  \cf4 </summary>\cf0 \
+  \cf4 ///\cf5  \cf4 <returns></returns>\cf0 \
+  \cf2 public\cf0  \cf2 async\cf0  Task StopAsync()\
+  \{\
+   \cf2 await\cf0  _host.StopAsync();\
+   _host.Dispose();\
+  \}\
+\
+  \cf4 ///\cf5  \cf4 <summary>\cf0 \
+  \cf4 ///\cf5  Get an instance of service of type T\cf0 \
+  \cf4 ///\cf5  \cf4 </summary>\cf0 \
+  \cf4 ///\cf5  \cf4 <typeparam name="\cf0 T\cf4 "></typeparam>\cf0 \
+  \cf4 ///\cf5  \cf4 <returns></returns>\cf0 \
+  \cf2 public\cf0  T GetService<\cf3 T\cf0 >()\
+  \{\
+   \cf2 return\cf0  _host.Services.GetService<T>();            \
+  \}\
+\
+  \cf4 #endregion\cf0 \
+ \}\
+\}\
+\pard\pardeftab708\ri-52\sl259\slmult1\sa160\partightenfactor0
+
+\f1\fs22 \cf0 \
+\pard\pardeftab708\ri-52\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab708\ri-52\partightenfactor0
+
+\f0\fs19 \cf2 protected\cf0  \cf2 override\cf0  \cf2 async\cf0  \cf2 void\cf0  OnLaunched(LaunchActivatedEventArgs e)\
+\{\
+ \cf5 // Host\cf0 \
+ \cf2 if\cf0  (e.PrelaunchActivated == \cf2 false\cf0 )\
+ \{\
+  \cf2 await\cf0  Host.Current.StartAsync();\
+ \}\
+ \cf5 // ...\cf0 \
+\}\
+\pard\pardeftab708\ri-52\partightenfactor0
+
+\f1\fs22 \cf0 \
+\
+\
+\pard\pardeftab708\ri-52\partightenfactor0
+
+\f0\fs19 \cf2 public\cf0  \cf2 partial\cf0  \cf2 class\cf0  \cf3 App\cf0  : Application\
+\{\
+ \cf2 private\cf0  \cf2 async\cf0  \cf2 void\cf0  Application_Startup(\cf2 object\cf0  sender, StartupEventArgs e)\
+ \{\
+  \cf2 await\cf0  Host.Current.StartAsync();\
+  MainWindow = Host.Current.GetService<MainView>();\
+  MainWindow.Show();\
+ \}\
+\
+ \cf2 private\cf0  \cf2 async\cf0  \cf2 void\cf0  Application_Exit(\cf2 object\cf0  sender, ExitEventArgs e)\
+ \{\
+  \cf2 await\cf0  Host.Current.StopAsync();\
+ \}\
+\}
+\f1\fs22 \
+\pard\pardeftab708\ri-52\sl259\slmult1\sa160\partightenfactor0
+\cf0 \
+\pard\pardeftab708\ri-52\partightenfactor0
+\cf0 \
+\pard\pardeftab708\ri-52\partightenfactor0
+
+\f0\fs19 \cf2 private\cf0  \cf2 static\cf0  T GetSettings<\cf3 T\cf0 >()\
+\{\
+    \cf2 var\cf0  builder = \cf2 new\cf0  ConfigurationBuilder()\
+        .SetBasePath(Directory.GetCurrentDirectory())\
+        .AddJsonFile(\cf6 "appsettings.json"\cf0 , optional: \cf2 false\cf0 );\
+\
+    \cf2 var\cf0  config = builder.Build();\
+    \cf2 var\cf0  settings = config.Get<T>();\
+    \cf2 return\cf0  settings;\
+\pard\pardeftab708\ri-52\sl259\slmult1\sa160\partightenfactor0
+\cf0 \}
+\f1\fs22 \
+\
+}

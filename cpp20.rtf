@@ -1,0 +1,910 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fnil\fcharset0 Consolas;\f1\fnil\fcharset0 Calibri;\f2\fnil\fcharset0 Calibri-Bold;
+\f3\fnil\fcharset0 Cambria;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red0\green128\blue0;\red9\green134\blue88;
+\red163\green21\blue21;}
+{\*\expandedcolortbl;;\csgenericrgb\c0\c0\c100000;\csgenericrgb\c0\c50196\c0;\csgenericrgb\c3529\c52549\c34510;
+\csgenericrgb\c63922\c8235\c8235;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab708
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+
+\f0\fs21 \cf2 void\cf0 \'a0CElementManager::OnLButtonDown(CModeler1View\cf2 *\cf0 \'a0pView,\'a0UINT\'a0nFlags,\'a0\cf2 const\cf0 \'a0CPoint\cf2 &\cf0 \'a0cpoint)\
+\{\
+\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0m_type\'a0==\'a0ElementType::type_unknown\'a0)\
+\'a0\'a0\'a0\'a0\{\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//FIXME\'a0:\'a0do\'a0we\'a0need\'a0to\'a0handle\'a0not\'a0implemented\'a0objects\'a0?\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 return\cf0 ;\
+\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\
+\'a0\'a0\'a0\'a0CPoint\'a0point\'a0=\'a0cpoint;\
+\'a0\'a0\'a0\'a0ViewToManager(pView,\'a0point);\
+\'a0\'a0\'a0\'a0m_clickPoint\'a0=\'a0point;\
+\'a0\'a0\'a0\'a0m_lastPoint\'a0=\'a0point;\
+\'a0\'a0\'a0\'a0m_selectPoint\'a0=\'a0point;\
+\
+\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0m_type\'a0==\'a0ElementType::type_select\'a0)\
+\'a0\'a0\'a0\'a0\{\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_selectMode\'a0=\'a0SelectMode::none;\
+\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Check\'a0for\'a0resizing\'a0(only\'a0allowed\'a0on\'a0single\'a0selections)\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0HasSelection()\'a0&&\'a0\'a0m_selection.GetCount()\'a0==\'a0\cf4 1\cf0 )\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0std::shared_ptr<CElement>\'a0pElement\'a0=\'a0m_selection.GetHead();\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//Change\'a0cursor\'a0look\'a0because\'a0mouse\'a0click\'a0is\'a0over\'a0an\'a0object\'a0for\'a0sizing\'a0\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_nDragHandle\'a0=\'a0pElement->HitTest(point,\'a0pView,\'a0TRUE);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(m_nDragHandle\'a0!=\'a0\cf4 0\cf0 )\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_selectMode\'a0=\'a0SelectMode::size;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(m_nDragHandle\'a0==\'a0\cf4 2\cf0 )\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_connectorInUse\'a0=\'a0ConnectorType::connector2;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 else\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_connectorInUse\'a0=\'a0ConnectorType::connector1;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 else\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_connectorInUse\'a0=\'a0ConnectorType::connector2;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0m_selectMode\'a0==\'a0SelectMode::none\'a0)\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0See\'a0if\'a0the\'a0click\'a0was\'a0on\'a0an\'a0object\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0std::shared_ptr<CElement>\'a0pElement\'a0=\'a0m_objects.ObjectAt(point,\'a0m_selectType);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0pElement\'a0!=\'a0\cf2 NULL\cf0 \'a0)\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0IsSelected(pElement)\'a0==\'a0\cf2 false\cf0 \'a0)\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0(nFlags\'a0&\'a0MK_SHIFT)\'a0||\'a0(nFlags\'a0&\'a0MK_CONTROL))\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 else\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SelectNone();\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(pElement->m_bGrouping\'a0==\'a0\cf2 false\cf0 )\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_objectId\'a0=\'a0pElement->m_objectId;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0Select(pElement);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 else\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 for\cf0 \'a0(vector<std::shared_ptr<CElement>>::const_iterator\'a0itSel\'a0=\'a0pElement->m_pElementGroup->m_Groups.begin();\'a0itSel\'a0!=\'a0pElement->m_pElementGroup->m_Groups.end();\'a0itSel++)\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0std::shared_ptr<CElement>\'a0pObj\'a0=\'a0*itSel;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0Select(pObj);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pElement->m_bMoving\'a0=\'a0\cf2 true\cf0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 else\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0if\'a0shift\'a0or\'a0control\'a0i\'a0spressed,\'a0unselect\'a0the\'a0element\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0((nFlags\'a0&\'a0MK_SHIFT)\'a0||\'a0(nFlags\'a0&\'a0MK_CONTROL))\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0Deselect(pElement);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_selectMode\'a0=\'a0SelectMode::move;\
+\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Update\'a0UI\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0UpdateUI(pView,\'a0pElement);\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Redraw\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0Invalidate(pView,\'a0pElement);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 else\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0See\'a0if\'a0the\'a0click\'a0was\'a0on\'a0an\'a0object\cf0 \
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0TRUE\'a0->\'a0select\'a0and\'a0start\'a0move\'a0if\'a0so\cf0 \
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0FALSE\'a0->\'a0Click\'a0on\'a0background,\'a0start\'a0a\'a0net-selection\cf0 \
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0m_selectMode\'a0=\'a0netSelect;\cf0 \
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0HasSelection()\'a0)\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SelectNone();\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0Invalidate(pView,\'a0pElement);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_selectMode\'a0=\'a0SelectMode::netselect;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\}\
+\cf3 \'a0\'a0\'a0\'a0//\'a0We\'a0are\'a0not\'a0in\'a0a\'a0select\'a0operation\cf0 \
+\cf3 \'a0\'a0\'a0\'a0//\'a0->\'a0this\'a0is\'a0a\'a0drawing\'a0operation\cf0 \
+\cf3 \'a0\'a0\'a0\'a0//\'a0We\'a0have\'a0to\'a0create...\cf0 \
+\cf3 \'a0\'a0\'a0\'a0//\'a0Create\'a0a\'a0Drawable\'a0Object...\cf0 \
+\'a0\'a0\'a0\'a0\cf2 else\cf0 \
+\'a0\'a0\'a0\'a0\{\
+\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+\cf2 #ifdef\'a0VERSION_COMMUNITY\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(CFactory::g_counter\'a0>\'a0MAX_SHAPES\'a0&&\'a0IsMyLocalDev()\'a0==\'a0\cf2 false\cf0 )\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0AfxMessageBox(_T(\cf5 "Maximum\'a0number\'a0or\'a0shapes\'a0reached\'a0!\\nFor\'a0more,\'a0please\'a0buy\'a0the\'a0Architect\'a0Edition."\cf0 ));\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 return\cf0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\cf2 #endif\cf0 \
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SelectNone();\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0std::shared_ptr<CElement>\'a0pNewElement\'a0=\'a0CFactory::CreateElementOfType(m_type,\'a0m_shapeType);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0m_type\'a0==\'a0ElementType::type_unknown\'a0)\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 return\cf0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(m_shapeType\'a0==\'a0ShapeType::selection)\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_bSelectionHasStarted\'a0=\'a0\cf2 true\cf0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pSelectionElement\'a0=\'a0pNewElement;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pNewElement->m_point\'a0=\'a0point;\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0For\'a0plumbing\'a0purpose...\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pNewElement->m_pManager\'a0=\'a0\cf2 this\cf0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pNewElement->m_pView\'a0=\'a0pView;\
+\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Add\'a0an\'a0object\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_objects.AddTail(pNewElement);\'a0\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Store\'a0last\'a0created\'a0object\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_objectId\'a0=\'a0pNewElement->m_objectId;\
+\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Select\'a0the\'a0new\'a0element\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0Select(pNewElement);\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_selectMode\'a0=\'a0SelectMode::size;\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_nDragHandle\'a0=\'a0\cf4 1\cf0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_connectorInUse\'a0=\'a0ConnectorType::connector2;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0FindAConnectionFor(pNewElement,\'a0point,\'a0pView,\'a0ConnectorType::connector1);\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pView->GetDocument()->SetModifiedFlag();\
+\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Update\'a0ClassView\'a0&\'a0FileView\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0UpdateClassView();\cf3 //pNewElement);\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0UpdateFileView();\cf3 //pNewElement);\cf0 \
+\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Update\'a0UI\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0UpdateUI(pView,\'a0pNewElement);\
+\'a0\'a0\'a0\'a0\}\
+\
+\}\
+\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+
+\f1\fs20 \cf0 \
+\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+
+\f0\fs21 \cf2 void\cf0 \'a0CElementManager::OnMouseMove(CModeler1View\cf2 *\cf0 \'a0pView,\'a0UINT\'a0nFlags,\'a0\cf2 const\cf0 \'a0CPoint\cf2 &\cf0 \'a0cpoint)\
+\{\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+\cf3 \'a0\'a0\'a0\'a0//\'a0a\'a0SELECT\'a0operation\'a0is\'a0started\cf0 \
+\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0m_selectMode\'a0==\'a0SelectMode::\cf4 none\cf0 \'a0)\
+\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\
+\'a0\'a0\'a0\'a0CPoint\'a0point\'a0=\'a0cpoint;\
+\'a0\'a0\'a0\'a0CPoint\'a0m_movePoint\'a0=\'a0point;\
+\'a0\'a0\'a0\'a0ViewToManager(pView,\'a0point);\
+\'a0\'a0\'a0\'a0CPoint\'a0lastPoint\'a0=\'a0point;\
+\
+\'a0\'a0\'a0\'a0std::shared_ptr<CElement>\'a0pElement\'a0=\'a0m_selection.GetHead();\cf3 \'a0//m_objects.FindElement(m_objectId);\cf0 \
+\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0pElement\'a0==\'a0\cf2 NULL\cf0 \'a0)\
+\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 return\cf0 ;\
+\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0m_type\'a0==\'a0ElementType::\cf4 type_select\cf0 \'a0)\
+\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0HasSelection()\'a0)\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Change\'a0cursor\'a0look\'a0temporary\'a0just\'a0because\'a0mouse\'a0could\'a0be\'a0over\'a0a\'a0shape\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 int\cf0 \'a0nHandle\'a0=\'a0pElement->HitTest(point,\'a0pView,\'a0\cf2 true\cf0 );\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(nHandle\'a0!=\'a0\cf4 0\cf0 )\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SetCursor(pElement->GetHandleCursor(nHandle));\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0m_selectMode\'a0==\'a0SelectMode::\cf4 move\cf0 \'a0)\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 for\cf0 (\'a0vector<std::shared_ptr<CElement>>::const_iterator\'a0itSel\'a0=\'a0m_selection.m_objects.begin()\'a0;\'a0itSel!=m_selection.m_objects.end()\'a0;\'a0itSel++\'a0)\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0std::shared_ptr<CElement>\'a0pObj\'a0=\'a0*itSel;\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0CPoint\'a0delta\'a0=\'a0(CPoint)(point\'a0-\'a0m_lastPoint);\'a0\'a0\'a0\'a0\'a0\'a0\'a0\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0InvalObj(pView,\'a0pObj);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pObj->m_rect\'a0+=\'a0delta;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pObj->m_point\'a0=\'a0pObj->m_rect.TopLeft();\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0InvalObj(pView,\'a0pObj);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pView->GetDocument()->SetModifiedFlag();\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0m_selectMode\'a0==\'a0SelectMode::\cf4 size\cf0 \'a0)\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0m_nDragHandle\'a0!=\'a0\cf4 0\cf0 )\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0std::shared_ptr<CElement>\'a0pObj\'a0=\'a0m_selection.GetHead();\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pObj->MoveHandleTo(m_nDragHandle,\'a0point,\'a0pView);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0FindAConnectionFor(pElement,\'a0point,\'a0pView,\'a0m_connectorInUse);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0InvalObj(pView,\'a0pObj);\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pView->GetDocument()->SetModifiedFlag();\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\cf2 else\cf0 \
+\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0m_selectMode\'a0==\'a0SelectMode::\cf4 size\cf0 \'a0)\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pElement->m_last\'a0=\'a0point;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pElement->InvalidateObj();\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0FindAConnectionFor(pElement,\'a0point,\'a0pView,\'a0m_connectorInUse);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0InvalObj(pView,\'a0pElement);\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pView->GetDocument()->SetModifiedFlag();\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\}\'a0\'a0\'a0\
+\
+\'a0\'a0\'a0\'a0m_lastPoint\'a0=\'a0point;\
+\
+\cf3 \'a0\'a0\'a0\'a0//\'a0Check\'a0for\'a0mouse\'a0cursor\'a0->\'a0sizing/moving\cf0 \
+\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0m_selectMode\'a0==\'a0SelectMode::\cf4 size\cf0 \'a0)\
+\'a0\'a0\'a0\'a0\{\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//if\'a0(m_nDragHandle\'a0!=\'a00)\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SetCursor(m_selection.GetHead()->GetHandleCursor(m_nDragHandle));\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\cf2 if\cf0 (\'a0m_type\'a0==\'a0ElementType::\cf4 type_select\cf0 \'a0&&\'a0m_selection.GetCount()\'a0==\'a0\cf4 0\cf0 )\
+\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SetCursor(AfxGetApp()->LoadStandardCursor(\cf2 IDC_ARROW\cf0 ));\
+\'a0\'a0\'a0\'a0\}\
+\}\
+\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+
+\f1\fs20 \cf0 \
+\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+
+\f0\fs21 \cf2 void\cf0 \'a0CElementManager::OnLButtonUp(CModeler1View\cf2 *\cf0 \'a0pView,\'a0UINT\'a0nFlags,\'a0\cf2 const\cf0 \'a0CPoint\cf2 &\cf0 \'a0cpoint)\
+\{\
+\'a0\'a0\'a0\'a0CPoint\'a0point\'a0=\'a0cpoint;\
+\'a0\'a0\'a0\'a0ViewToManager(pView,\'a0point);\
+\
+\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+\cf3 \'a0\'a0\'a0\'a0//if(\'a0m_selectMode\'a0==\'a0SelectMode::move\'a0||\'a0m_selectMode\'a0==\'a0SelectMode::size\'a0)\cf0 \
+\'a0\'a0\'a0\'a0\{\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Selection\'a0Moving\'a0or\'a0Sizing\'a0is\'a0finished.\'a0\cf0 \
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Nothing\'a0to\'a0do.\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_selectMode\'a0=\'a0SelectMode::\cf4 none\cf0 ;\
+\'a0\'a0\'a0\'a0\}\
+\
+\cf3 \'a0\'a0\'a0\'a0//m_bDrawing\'a0=\'a0FALSE;\cf0 \
+\
+\'a0\'a0\'a0\'a0std::shared_ptr<CElement>\'a0pElement\'a0=\'a0m_objects.FindElement(m_objectId);\
+\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(pElement\'a0==\'a0\cf2 NULL\cf0 )\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 return\cf0 ;\
+\
+\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(m_type\'a0==\'a0ElementType::\cf4 type_select\cf0 )\
+\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(HasSelection()\'a0&&\'a0m_selection.GetCount()\'a0==\'a0\cf4 1\cf0 )\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Nothing\'a0to\'a0do...\cf0 \
+\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\cf2 else\cf0 \
+\'a0\'a0\'a0\'a0\{\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Finish\'a0a\'a0drawing\'a0operation\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pElement->m_last\'a0=\'a0point;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pElement->InvalidateObj();\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pElement->CheckForKeepingAMinimumSize();\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Switch\'a0the\'a0view\'a0in\'a0Select\'a0Mode\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_type\'a0=\'a0ElementType::\cf4 type_select\cf0 ;\
+\'a0\'a0\'a0\'a0\}\
+\
+\cf3 \'a0\'a0\'a0\'a0//\cf0 \
+\cf3 \'a0\'a0\'a0\'a0//\'a0We\'a0are\'a0gonna\'a0end\'a0a\'a0slection\'a0rect...\cf0 \
+\cf3 \'a0\'a0\'a0\'a0//\cf0 \
+\
+\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(m_bSelectionHasStarted\'a0==\'a0\cf2 true\cf0 )\
+\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0CRect\'a0rect\'a0=\'a0pSelectionElement->m_rect;\
+\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0remove\'a0the\'a0selection\'a0element\'a0from\'a0the\'a0objects\'a0list\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0vector<std::shared_ptr<CElement>>::iterator\'a0pos;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pos\'a0=\'a0find(m_objects.m_objects.begin(),\'a0m_objects.m_objects.end(),\'a0pSelectionElement);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(pos\'a0!=\'a0m_objects.m_objects.end())\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_objects.m_objects.erase(pos);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0remove\'a0the\'a0selection\'a0element\'a0from\'a0the\'a0selection\'a0list\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0vector<std::shared_ptr<CElement>>::iterator\'a0pos2;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pos2\'a0=\'a0find(m_selection.m_objects.begin(),\'a0m_selection.m_objects.end(),\'a0pSelectionElement);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(pos2\'a0!=\'a0m_selection.m_objects.end())\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_selection.m_objects.erase(pos2);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//ViewToManager(pView,\'a0rect);\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0SelectNone();\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0shared_ptr<CElement>\'a0pLastSelected\'a0=\'a0\cf2 nullptr\cf0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0vector<std::shared_ptr<CElement>>\'a0v\'a0=\'a0m_objects.ObjectsInRectEx(rect,\'a0m_selectType);\cf3 \'a0//\'a0version\'a0Ex\'a0:\'a0do\'a0not\'a0select\'a0lines\'a0with\'a0full\'a0connector\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(v.size()\'a0!=\'a0\cf4 0\cf0 )\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 for\cf0 \'a0(std::shared_ptr<CElement>\'a0pElement\'a0:\'a0v)\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(IsSelected(pElement)\'a0==\'a0\cf2 false\cf0 )\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(pElement->m_bGrouping\'a0==\'a0\cf2 false\cf0 )\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0Select(pElement);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pLastSelected\'a0=\'a0pElement;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf2 if\cf0 \'a0(pLastSelected\'a0!=\'a0\cf2 nullptr\cf0 )\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{\
+\cf3 \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0//\'a0Update\'a0UI\cf0 \
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0UpdateUI(pView,\'a0pLastSelected);\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0pSelectionElement\'a0=\'a0\cf2 nullptr\cf0 ;\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0m_bSelectionHasStarted\'a0=\'a0\cf2 false\cf0 ;\
+\'a0\'a0\'a0\'a0\}\
+\
+\'a0\'a0\'a0\'a0m_bSizingALine\'a0=\'a0\cf2 false\cf0 ;\
+\
+\cf3 \'a0\'a0\'a0\'a0//\'a0Set\'a0selectType\'a0to\'a0default\cf0 \
+\'a0\'a0\'a0\'a0m_selectType\'a0=\'a0SelectType::\cf4 intuitive\cf0 ;\
+\'a0\'a0\'a0\'a0m_connectorInUse\'a0=\'a0ConnectorType::\cf4 connector2\cf0 ;\
+\'a0\'a0\'a0\'a0m_bDrawRectForConnectionPoint\'a0=\'a0\cf2 false\cf0 ;\
+\
+\'a0\'a0\'a0\'a0pElement->m_bMoving\'a0=\'a0\cf2 FALSE\cf0 ;\
+\cf3 \'a0\'a0\'a0\'a0//\'a0Redraw\cf0 \
+\'a0\'a0\'a0\'a0InvalObj(pView,\'a0pElement);\'a0\'a0\
+\
+\'a0\'a0\'a0\'a0m_selectMode\'a0=\'a0SelectMode::\cf4 none\cf0 ;\
+\'a0\'a0\'a0\'a0pView->GetDocument()->SetModifiedFlag();\
+\'a0\'a0\'a0\'a0pView->GetDocument()->UpdateAllViews(pView);\
+\}\
+\pard\pardeftab708\ri-340\sl276\slmult1\sa200\partightenfactor0
+
+\f1\fs20 \cf0 \
+\pard\pardeftab708\ri-340\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+
+\f0\fs21 \cf2 #define\'a0OffsetShapes_Simple\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf4 0\cf0 \
+\cf2 #define\'a0OffsetShapes_Image\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf4 50\cf0 \
+\cf2 #define\'a0OffsetShapes_Infrastructure\'a0\cf4 100\cf0 \
+\cf2 #define\'a0OffsetShapes_Text\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf4 200\cf0 \
+\cf2 #define\'a0OffsetShapes_Development\'a0\'a0\'a0\'a0\cf4 300\cf0 \
+\cf2 #define\'a0OffsetShapes_Import\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf4 400\cf0 \
+\cf2 #define\'a0OffsetShapes_Planning\'a0\'a0\'a0\'a0\'a0\'a0\'a0\cf4 500\cf0 \
+\cf2 #define\'a0OffsetShapes_Connectors\'a0\'a0\'a0\'a0\'a0\cf4 520\cf0 \
+\
+\cf2 enum\cf0 \'a0ShapeType\'a0:\'a0\cf2 int\cf0 \'a0\
+\{\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+\cf3 \'a0\'a0\'a0\'a0//\'a0Simple\cf0 \
+\'a0\'a0\'a0\'a0\cf4 line\cf0 \'a0=\'a0\cf2 OffsetShapes_Simple\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 line_right\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 rectangle\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 ellipse\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 rectangle_round\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 triangle\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 line_broken\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 line_broken_right\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 notimp_igloo\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 notimpl_multi_line\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 arrow_right\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 arrow_down\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 courbe1\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 courbe2\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 parenthese_left\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 parenthese_right\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 star\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 line2\cf0 \'a0=\'a0\cf4 18\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 line_right2\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 line_left_right\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 line_broken2\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 line_broken_right2\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 line_broken_left_right\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 curve\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 curve_right\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 curve_left_right\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 courbe2_bis\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 patate\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 curve_fuzzy\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 basic_rectangle\cf0 \'a0=\'a0\cf4 30\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 basic_rectangle2\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 basic_rectangle3\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 basic_losange\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 basic_round_rectangle\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 basic_database\cf0 \'a0=\'a0\cf4 42\cf0 ,\
+\cf3 \'a0\'a0\'a0\'a0//\'a0Image\cf0 \
+\'a0\'a0\'a0\'a0\cf4 image_fixed\cf0 \'a0=\'a0\cf2 OffsetShapes_Image\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 image_scaled\cf0 ,\
+\cf3 \'a0\'a0\'a0\'a0//\'a0Infrastructure\cf0 \
+\'a0\'a0\'a0\'a0\cf4 infrastructure_server_ad\cf0 \'a0=\'a0\cf2 OffsetShapes_Infrastructure\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_server\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_server_web\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_server_database\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_workstation\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_laptop\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_firewall\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_network\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_virtual_server\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_virtual_server_web\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_virtual_server_database\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_virtualization_server\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_server_ad_grey\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_server_grey\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_server_database_grey\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_server_farm\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_workstation_grey\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 infrastructure_laptop_grey\cf0 ,\
+\cf3 \'a0\'a0\'a0\'a0//\'a0Text\cf0 \
+\'a0\'a0\'a0\'a0\cf4 text\cf0 \'a0=\'a0\cf2 OffsetShapes_Text\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 text_left\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 text_center\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 text_right\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 text_justify\cf0 ,\
+\cf3 \'a0\'a0\'a0\'a0//\'a0Development\cf0 \
+\'a0\'a0\'a0\'a0\cf4 development_class\cf0 \'a0=\'a0\cf2 OffsetShapes_Development\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 development_interface\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 development_enumeration\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 development_package\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 development_comment\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 development_component\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 development_association\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 development_aggregation\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 development_composition\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 development_dependency\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 development_inheritance\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 development_package_import\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 development_connector\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 import_class\cf0 \'a0=\'a0\cf2 OffsetShapes_Import\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 planning_month\cf0 \'a0=\'a0\cf2 OffsetShapes_Planning\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 planning_task\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 selection\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 connection\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 diagram\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 connector_up\cf0 \'a0=\'a0\cf2 OffsetShapes_Connectors\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 connector_down\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 connector_left\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 connector_right\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 connector_single_left\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 connector_single_right\cf0 ,\
+\'a0\'a0\'a0\'a0\cf4 unknown\cf0 \'a0=\'a0\cf4 1000\cf0 \
+\};\
+\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+\cf2 \
+\
+void\cf0 \'a0CModeler1View::OnModelingShapes()\
+\{\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+\cf3 \'a0\'a0\'a0\'a0//\'a0TODO:\'a0Add\'a0your\'a0command\'a0handler\'a0code\'a0here\cf0 \
+\'a0\'a0\'a0\'a0GetManager()->m_type\'a0=\'a0ElementType::\cf4 type_shapes_simple\cf0 ;\
+\'a0\'a0\'a0\'a0\cf2 int\cf0 \'a0shapeId\'a0=\'a0CMFCRibbonGallery::GetLastSelectedItem(ID_DESIGN_SHAPES);\
+\'a0\'a0\'a0\'a0GetManager()->m_shapeType\'a0=\'a0CShapeType::ToShapeType(\cf2 OffsetShapes_Simple\cf0 \'a0+\'a0shapeId);\
+\}\
+\
+\pard\pardeftab708\ri-340\partightenfactor0
+
+\f1\fs20 \cf0 \
+\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+
+\f0\fs21 \cf0 std::shared_ptr<CElement>\'a0pNewElement\'a0=\'a0\
+    CFactory::CreateElementOfType(m_type,\'a0m_shapeType);\
+pNewElement->m_point\'a0=\'a0point;\
+\pard\pardeftab708\ri-340\sl285\partightenfactor0
+\cf3 //\'a0For\'a0plumbing\'a0purpose...\cf0 \
+pNewElement->m_pManager\'a0=\'a0\cf2 this\cf0 ;\
+pNewElement->m_pView\'a0=\'a0pView;\
+\cf3 //\'a0Add\'a0an\'a0object\cf0 \
+m_objects.AddTail(pNewElement);\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\
+\cf3 //\'a0Store\'a0last\'a0created\'a0object\cf0 \
+m_objectId\'a0=\'a0pNewElement->m_objectId;\
+\cf3 //\'a0Select\'a0the\'a0new\'a0element\cf0 \
+Select(pNewElement);\
+m_selectMode\'a0=\'a0SelectMode::size;\
+\pard\pardeftab708\ri-340\partightenfactor0
+
+\f1\fs20 \cf0 \
+\
+\
+\
+Contenu du fichier sqlite.h\'a0:\
+#ifdef SQLITE_EXPORTS\
+#define SQLITE_API __declspec(dllexport)\
+#else\
+#define SQLITE_API __declspec(dllimport)\
+#endif\
+\
+Contenu du fichier sqlite3.h\'a0:\
+../..\
+SQLITE_API int sqlite3_open(\
+  const char *filename,   /* Database filename (UTF-8) */\
+  sqlite3 **ppDb          /* OUT: SQLite db handle */\
+);\
+SQLITE_API int sqlite3_open16(\
+  const void *filename,   /* Database filename (UTF-16) */\
+  sqlite3 **ppDb          /* OUT: SQLite db handle */\
+);\
+SQLITE_API int sqlite3_open_v2(\
+  const char *filename,   /* Database filename (UTF-8) */\
+  sqlite3 **ppDb,         /* OUT: SQLite db handle */\
+  int flags,              /* Flags */\
+  const char *zVfs        /* Name of VFS module to use */\
+);\
+../\'85\
+\
+\pard\pardeftab708\ri-340\partightenfactor0
+
+\f2\b \cf0 \
+\pard\pardeftab708\ri-340\partightenfactor0
+
+\f1\b0 \cf0    int sqlite3_user_authenticate(\
+     sqlite3 *db,           /* The database connection */\
+     const char *zUsername, /* Username */\
+     const char *aPW,       /* Password or credentials */\
+     int nPW                /* Number of bytes in aPW[] */\
+   );\
+\
+\pard\pardeftab708\ri-340\partightenfactor0
+
+\f2\b \cf0 \
+\pard\pardeftab708\ri-340\partightenfactor0
+
+\f1\b0 \cf0 \
+#ifndef __Database_H__\
+#define __Database_H__\
+\
+#include <sqlite/sqlite3.h>\
+\
+namespace SQLite\
+\{\
+\
+    class Query;\
+    class PreparedStmt;\
+\
+    class SQLITEWRAPPER_API Database\
+    \{\
+    public:\
+        Database(void);\
+        Database(std::string filename);\
+        virtual ~Database(void);\
+\
+    public:\
+        void SetDatabaseName(std::string fileName);\
+        void AddUser(std::string user, std::string password);\
+        bool AuthenticateUser(std::string user, std::string password);\
+        bool IsOpen();\
+        sqlite3_stmt* PrepareQuery(std::string query);\
+        void SetFileName(std::string filename);\
+        bool CreateAdminUser();\
+        bool Open();\
+        bool OpenEx(std::string user, std::string password);\
+        bool Close();\
+        void ReportError(std::string context);\
+        int ExecuteSQL(std::string sql, int& rows);\
+        int ExecuteCommand(std::string command, int& rows);\
+        Query ExecuteQuery(std::string query, int& rows);\
+        PreparedStmt CreatePreparedStmt(std::string statement);\
+        int ExecuteScalar(std::string query);\
+        sqlite_int64 GetLastRowID();\
+        void SetBusyTimeout(int timeout);\
+        sqlite_int64 InsertAndReturnID(std::string sqlinsert);\
+\
+    protected:\
+        std::string m_DatabaseFileName;\
+        bool m_bOpen;\
+        sqlite3* m_instance;\
+    \};\
+\
+\}\
+#endif //__Database_H__\
+\
+Contenu de PreparedStmt.h\'a0:\
+\
+#ifndef __PreparedStmt_H__\
+#define __PreparedStmt_H__\
+\
+#include <sqlite/sqlite3.h>\
+#include <string>\
+#include "Query.h"\
+\
+namespace SQLite\
+\{\
+\
+    class SQLITEWRAPPER_API PreparedStmt\
+    \{\
+    public:\
+        PreparedStmt(void);\
+        PreparedStmt(sqlite3* instance, sqlite3_stmt* stmt);\
+        virtual ~PreparedStmt(void);\
+\
+    public:\
+        PreparedStmt& operator=(const PreparedStmt& right);\
+        void SetStringParameter(int index, std::string value);\
+        void SetIntegerParameter(int index, int value);\
+        void SetDoubleParameter(int index, double value);\
+        void SetInt64Parameter(int index, sqlite_int64 value);\
+        void SetNullParameter(int index);\
+        void Reset();\
+        void Close();\
+        int Execute(int& rozs);\
+        sqlite_int64 ExecuteAndGetID();\
+        Query ExecuteAndGetQuery();\
+\
+    protected:\
+        sqlite3_stmt* m_statement;\
+        sqlite3* m_instance;\
+        int m_NumberOfParameters;\
+\
+    public:\
+        inline bool IsOpen() \{ return m_instance != NULL; \}\
+        inline bool IsStmtOpen() \{ return m_statement != NULL; \}\
+        inline void SetNull() \{ m_statement = NULL; \}\
+        inline bool CheckParameter(int index) \{ return (index <= m_NumberOfParameters); \};\
+        inline int  GetNumberOfParams() \{ return m_NumberOfParameters; \}\
+    \};\
+\
+\}\
+\
+#endif //__PreparedStmt_H__\
+\pard\pardeftab708\ri-340\sl276\slmult1\sa200\partightenfactor0
+\cf0 \
+\pard\pardeftab708\ri-340\partightenfactor0
+\cf0 Contenu de Query.h\'a0:\
+\
+#ifndef __Query_H__\
+#define __Query_H__\
+\
+#include <string>\
+#include <sqlite/sqlite3.h>\
+#include "common/ColumnType.h"\
+#include "common/DatabaseException.h"\
+\
+namespace SQLite\
+\{\
+\
+    class SQLITEWRAPPER_API Query\
+    \{\
+    public:\
+        Query(void);\
+        virtual ~Query(void);\
+        Query(sqlite3_stmt* stmt, sqlite3* instance, bool norows, bool ownstatement = true);\
+        Query(const Query& query);\
+        Query& operator=(const Query& query);\
+\
+    protected:\
+        sqlite3_stmt* m_statement;\
+        sqlite3* m_instance;\
+        int m_NbCols;\
+        bool m_bEOF;\
+        bool m_bDestroyStatement;\
+\
+    protected:\
+        inline bool IsOpen() \{ return m_instance != NULL; \}\
+        inline bool IsStmtOpen() \{ return m_statement != NULL; \}\
+        inline void SetNull() \{ m_statement = NULL; \}\
+\
+    public:\
+        inline bool IsEOF() \{ return m_bEOF; \}\
+        inline bool IsColumnIndexValid(int index) \{ return (((index >= 0) && (index <= (m_NbCols - 1)))); \}\
+        inline int GetNumberOfColumns() \{ return m_NbCols; \}\
+        void Close();\
+        std::string GetColumnName(int index);\
+        ColumnType GetColumnType(int index);\
+        double GetDoubleValue(int index);\
+        int GetIntValue(int index);\
+        long GetLongValue(int index);\
+        std::string GetStringValue(int index);\
+        void MoveNext();\
+    \};\
+\
+\}\
+\
+#endif //__Query_H__
+\fs18  \
+\pard\pardeftab708\ri-340\sl276\slmult1\sa200\partightenfactor0
+
+\fs20 \cf0 \
+\pard\pardeftab708\ri-340\partightenfactor0
+\cf0 \
+	bool Database::OpenEx(std::string user, std::string password)\
+	\{\
+		int retValue = sqlite3_open_v2(m_DatabaseFileName.c_str(), &m_instance, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL);\
+		m_bOpen = (retValue == SQLITE_OK);\
+		if (!m_bOpen)\
+		\{\
+			ReportError(" opening database file " + m_DatabaseFileName + " ");\
+		\}\
+\
+		retValue = sqlite3_user_authenticate(m_instance, user.c_str(), password.c_str(), password.size());\
+		if (retValue == SQLITE_OK)\
+			return true;\
+\
+		return false;\
+	\}\
+\
+\
+\
+	// open database\
+	SQLite::Database db;\
+	string dbName = UFM_SQLITE_DATABASE;\
+	db.SetDatabaseName(dbName);\
+	if (!db.OpenEx(UFM_SQLITE_USER, UFM_SQLITE_PASSWORD))\
+		return;\
+\pard\pardeftab708\ri-340\sl276\slmult1\sa200\partightenfactor0
+\cf0 \
+\pard\pardeftab708\ri-340\partightenfactor0
+\cf0 \
+	// store to db\
+	SQLiteDiagramEntity diagramEntity(&db);\
+	diagramEntity.FileName = diagramName;\
+	diagramEntity.Json = strJson;\
+	diagramEntity.InsertOrUpdate(m_diagramId);\
+	db.Close();\
+\pard\pardeftab708\ri-340\sl276\slmult1\sa200\partightenfactor0
+\cf0 \
+\pard\pardeftab708\ri-340\partightenfactor0
+\cf0 \
+bool SQLiteDiagramEntity::InsertOrUpdate(int& id)\
+\{\
+    string sql;\
+\
+    if (id == 0)\
+    \{\
+        // Insert\
+        //
+\fs18  
+\fs20 "INSERT INTO Diagram VALUES (NULL, datetime('now'), ?, ?);"\
+        sql = SQLiteQueryString::GetSQLQuery(SQLiteQueryString::Insert_Diagram);\
+\
+        SQLite::PreparedStmt stmt = m_pDatabase->CreatePreparedStmt(sql);\
+        stmt.SetStringParameter(1, this->FileName);\
+        stmt.SetStringParameter(2, this->Json);\
+        //stmt.SetNullParameter(6);\
+\
+        int rows;\
+        if (!stmt.Execute(rows))\
+            return false;\
+\
+        stmt.Close();\
+\
+        id = m_pDatabase->GetLastRowID();\
+    \}\
+    else\
+    \{\
+        // Update\
+        // "UPDATE Diagram SET Json=? WHERE DiagramPK=?;"\
+        sql = SQLiteQueryString::GetSQLQuery(SQLiteQueryString::Update_Diagram);\
+\
+        SQLite::PreparedStmt stmt = m_pDatabase->CreatePreparedStmt(sql);\
+        stmt.SetStringParameter(1, this->Json);\
+        stmt.SetIntegerParameter(2, id);\
+        //stmt.SetNullParameter(6);\
+\
+        int rows;\
+        if (!stmt.Execute(rows))\
+            return false;\
+\
+        stmt.Close();\
+    \}\
+\
+    return true;\
+\}\
+\pard\pardeftab708\ri-340\sl276\slmult1\sa200\partightenfactor0
+\cf0 \
+\pard\pardeftab708\ri-340\partightenfactor0
+\cf0 \
+vector<shared_ptr<SQLiteDiagramEntity>> SQLiteDiagramEntity::SelectAll()\
+\{\
+\
+    vector<shared_ptr<SQLiteDiagramEntity>> vDiagrams;\
+    string sql;\
+\
+    try\
+    \{\
+        //
+\fs18  
+\fs20 "SELECT DiagramPK, LastUpdate, FileName, Json FROM Diagram;"\
+        sql = SQLiteQueryString::GetSQLQuery(SQLiteQueryString::SelectAll_Diagram);\
+        int rows = 0;\
+\
+        //SQLite::Query q;\
+        //q = m_pDatabase->ExecuteQuery("select count(*) from Diagram", rows);\
+        //int count = q.GetLongValue(0);\
+        //q.Close();\
+\
+        rows = 0;\
+        SQLite::Query query;\
+        query = m_pDatabase->ExecuteQuery(sql, rows);\
+\
+        while (query.IsEOF() == false)\
+        \{\
+            shared_ptr<SQLiteDiagramEntity> sde = make_shared<SQLiteDiagramEntity>();\
+\
+            sde->DiagramPK = query.GetLongValue(0);\
+            sde->LastUpdate = query.GetStringValue(1);\
+            sde->FileName = query.GetStringValue(2);\
+            sde->Json = query.GetStringValue(3);\
+\
+            vDiagrams.push_back(sde);\
+\
+            query.MoveNext();\
+        \}\
+\
+        query.Close();\
+    \}\
+    catch (SQLite::DatabaseException ex)\
+    \{\
+        std::cerr << ex.ToString() << std::endl;\
+    \}\
+\
+    return vDiagrams;\
+\}
+\fs18  \
+\
+
+\fs20 \
+\pard\pardeftab708\ri-340\sl276\slmult1\sa200\partightenfactor0
+\cf0 \page \
+\pard\pardeftab708\ri-340\partightenfactor0
+\cf0 \
+\
+\
+\
+\pard\tqc\tx4680\pardeftab708\ri-340\partightenfactor0
+
+\fs18 \cf0 \
+\pard\pardeftab708\ri-340\partightenfactor0
+\cf0 \
+\pard\tqc\tx4680\pardeftab708\ri-340\partightenfactor0
+\cf0 \
+\pard\pardeftab708\ri-340\partightenfactor0
+\cf0 \
+\pard\tqc\tx4680\pardeftab708\ri-340\partightenfactor0
+
+\f3 \cf0  	\
+\pard\pardeftab708\ri-340\partightenfactor0
+\cf0 \
+\
+Christophe PICHAUD | Leader de Domaine NET chez Infeeny\
+\pard\pardeftab708\ri-340\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "mailto:christophep@cpixxi.com"}}{\fldrslt \cf2 \ul \ulc2 christophep@cpixxi.com}} | {\field{\*\fldinst{HYPERLINK "http://www.windowscpp.com"}}{\fldrslt \cf2 \ul \ulc2 www.windowscpp.com}} \
+\pard\pardeftab708\ri-340\partightenfactor0
+
+\f1\fs20 \cf0 \
+\
+\
+}
